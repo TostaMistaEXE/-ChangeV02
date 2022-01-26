@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>Document</title>
+</head>
+<body>
+    <p>Chose a coin or mutiple coins to get the change </p>
+    <p>if you want to use decimals use the . ex(1.55)</p>
+</body>
+</html>
+<script>
+    let createDiv,createCheckBox,createButton,checkTest,checkTest1,coinsChosed=[],coins=[2,1,0.50,0.20,0.10,0.05,0.02,0.01];
+    createHTMLFunction()
+    
+    function createHTMLFunction()
+    {
+        for(let x=0;x<=1;x++)
+        {
+        createDiv=document.createElement('div');
+        createDiv.setAttribute("id","div"+x);
+        document.body.appendChild(createDiv);
+        }
+        for(let x=0;x<coins.length;x++)
+        {
+        createCheckBox=document.createElement('div');
+        createCheckBox.innerHTML = '<label for="check'+x+'">'+coins[x]+'€</label><input type="checkbox" id="check'+x+'" onclick="checkBoxFunction()">';
+        document.getElementById('div0').appendChild(createCheckBox);
+        }
+        createButton=document.createElement('div');
+        createButton.innerHTML = '<input style="display: none;" type="text" id="money_Id" value=""w> <button id="money_button" style="display: none;"onclick="executeChangeFunction()">Change</button> <p id="change_Id"></p>';
+        document.getElementById('div1').appendChild(createButton);
+    }
+    function checkBoxFunction()
+    {
+        coinsChosed=[];
+        for(let x=0;x<coins.length;x++)
+        {  
+            checkTest = document.getElementById("check"+x);
+            if(checkTest.checked == true)
+            {
+            addCoinsFunction(x);
+            }
+
+        }
+        displayChangeFunction()    
+    }
+    function addCoinsFunction(value)
+    {
+        coinsChosed.push(coins[value]);
+    }
+    function displayChangeFunction()
+    {
+        if(coinsChosed.length == 0)
+            {
+            document.getElementById("money_Id").style.display = "none";
+            document.getElementById("money_button").style.display = "none";
+            }
+            else
+            {
+                document.getElementById("money_Id").style.display = "block";
+            document.getElementById("money_button").style.display = "block";
+            }
+    }
+    function executeChangeFunction()
+    {
+        let money = 0,text1 = '';
+        money = document.getElementById("money_Id").value;
+            for (let i = 0; i < coinsChosed.length ; i++) {
+                x=0
+                while(money >= coinsChosed[i])
+                {
+                money -= coinsChosed[i];    
+                x++;
+                money = money.toFixed(2)
+                }
+                text1 += x + ":" + coinsChosed[i] + "€<br>";
+            }
+            if(money != 0)
+            {
+                alert("Add other coins you still have "+money + "€ \nChose more coins");
+            }
+            document.getElementById("change_Id").innerHTML = text1;
+    }
+</script>
